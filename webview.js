@@ -5,8 +5,10 @@ module.exports = Ferdi => {
     // Initialize empty vars
     var unread = 0;
     var match = [];
+    // Define RegExp to replace occasionally &nbsp
+    var re = new RegExp(String.fromCharCode(160), "g");
     // Get value of <title> tag where in case of new feed elements the number of elements appear
-    const titleValue = document.querySelector('title').text.replace(" ", "");
+    const titleValue = document.querySelector('title').text.replace(re, "");
     // Extract the number from the tag
     match = titleValue.match(/[\d\s]+/);
     // Some logic to handle the match groups
