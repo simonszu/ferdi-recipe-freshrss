@@ -1,8 +1,23 @@
-module.exports = () => {
-  // TODO: If your FreshRSS service has unread messages, uncomment these lines to implement the logic for updating the badges
-  // const getMessages = () => {
-  //   // TODO: Insert your notification-finding code here
-  //   Ferdi.setBadge(0, 0);
-  // };
-  // Ferdi.loop(getMessages);
+"use strict";
+
+module.exports = Ferdi => {
+  const getMessages = function getMessages() {
+    // Initialize empty vars
+    var unread = 0;
+    var match = [];
+    // Get value of <title> tag where in case of new feed elements the number of elements appear
+    const titleValue = document.querySelector('title').text;
+    // Extract the number from the tag
+    match = titleValue.match(/\d+/);
+    // Some logic to handle the match groups
+    unread = match != null && match.length > 0 ? match[0] : 0;
+    // Set unread msgs badge
+    Ferdi.setBadge(parseInt(unread, 10));
+  };
+
+  const loopFunc = () => {
+    getMessages();
+  };
+
+  Ferdi.loop(loopFunc);
 };
